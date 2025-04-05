@@ -1,11 +1,19 @@
 const express = require("express");
+const socket = require("socket.io");
+const cors = require("cors");
 
 const app = express();
 
-app.use("/test", (req, res) => {
-  console.log("test works");
+const server = app.listen(4000, () => {
+  console.log("listening on port 4000");
 });
 
-app.listen(4000, () => {
-  console.log("listening on port 4000");
+const io = socket(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", () => {
+  console.log("socket connection created");
 });
